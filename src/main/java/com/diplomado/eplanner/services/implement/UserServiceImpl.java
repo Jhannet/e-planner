@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserDTO> listUsers() {
-        return userRepository.findAll()
+        return userRepository.findAllByActiveOrderByUsernameAsc(Boolean.TRUE)
                 .stream()
                 .map(userMapper::toDto).collect(Collectors.toList());
     }
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserDTO> listUsersDetailed() {
-        return userRepository.findAll()
+        return userRepository.findAllByActiveOrderByUsernameAsc(Boolean.TRUE)
                 .stream()
                 .map(userMapper::toDtoDetailed).collect(Collectors.toList());
     }
@@ -99,6 +99,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long userId) {
-        userRepository.deleteById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with id: " + userId + "not exist."));
+        user.setActive(Boolean.FALSE);
+        userRepository.save(user);
     }
 }

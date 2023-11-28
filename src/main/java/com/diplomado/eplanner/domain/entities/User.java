@@ -27,18 +27,21 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserRol> roles;
 
+    private Boolean active;
+
     public User() {}
     public User(Long id) {
         this.id = id;
     }
 
-    public User(Long id, String username, String password, String email, LocalDateTime createdAt, UserDetail userDetail) {
+    public User(Long id, String username, String password, String email, LocalDateTime createdAt, UserDetail userDetail, Boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.createdAt = createdAt;
         this.userDetail = userDetail;
+        this.active = active;
     }
 
     public Long getId() {
@@ -97,6 +100,14 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -107,6 +118,7 @@ public class User implements Serializable {
                 ", createdAt=" + createdAt +
                 ", userDetail=" + userDetail +
                 ", roles=" + roles +
+                ", active=" + active +
                 '}';
     }
 }

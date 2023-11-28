@@ -60,6 +60,7 @@ public class UserMapper implements CustomMapper<UserDTO, User> {
         user.setPassword(dto.getPassword());
         user.setEmail(dto.getEmail());
         user.setCreatedAt(dto.getCreatedAt());
+        user.setActive(Boolean.TRUE);
 
         return user;
     }

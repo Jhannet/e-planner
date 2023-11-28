@@ -30,6 +30,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable final Long id) {
+        return ResponseEntity.ok().body(userService.getUserById(id).orElseThrow(IllegalArgumentException::new));
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody final UserCreationDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
